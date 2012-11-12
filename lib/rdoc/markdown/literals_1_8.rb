@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # :markup: markdown
 
 ##
@@ -376,6 +377,7 @@ class RDoc::Markdown::Literals
 
   # BOM = "ï»¿"
   def _BOM
+    #"\xEF\xBB\xBF".force_encoding("UTF-8")
     _tmp = match_string("\303\257\302\273\302\277")
     set_failed_rule :_BOM unless _tmp
     return _tmp
@@ -446,7 +448,11 @@ class RDoc::Markdown::Literals
   Rules = {}
   Rules[:_Alphanumeric] = rule_info("Alphanumeric", "/[0-9A-Za-z\\200-\\377]/")
   Rules[:_AlphanumericAscii] = rule_info("AlphanumericAscii", "/[A-Za-z0-9]/")
-  Rules[:_BOM] = rule_info("BOM", "\"ï»¿\"")
+
+  BOM= "\xEF\xBB\xBF".force_encoding("UTF-8")
+
+  Rules[:_BOM] = rule_info("BOM", BOM)
+
   Rules[:_Newline] = rule_info("Newline", "(\"\\n\" | \"\" \"\\n\"?)")
   Rules[:_NonAlphanumeric] = rule_info("NonAlphanumeric", "/[\\000-\\057\\072-\\100\\133-\\140\\173-\\177]/")
   Rules[:_Spacechar] = rule_info("Spacechar", "(\" \" | \"\\t\")")
